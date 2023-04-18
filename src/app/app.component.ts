@@ -7,7 +7,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'charts';
+  title = 'Tailwind & Apexcharts';
   open = true;
   userName = 'محمد موسى';
   userPosition = 'مهندس برمجيات / شركة ناسكا';
