@@ -1,0 +1,19 @@
+<div class="grow flex flex-col transition"
+[ngClass]="open ? 'lg:mr-1 ' : 'lg:mr-0'" id="chart">
+  <apx-chart
+    [lang]="'ar'"
+    [series]="chartOptions.series! || chartOptions.seriesNa"
+    [stroke]="chartOptions.stroke!"
+    [title]="chartOptions.title!"
+    [chart]="chartOptions.chart!"
+    [dataLabels]="chartOptions.dataLabels!"
+    [plotOptions]="chartOptions.plotOptions!"
+    [yaxis]="chartOptions.yaxis!"
+    [xaxis]="chartOptions.xaxis!"
+    [legend]="chartOptions.legend!"
+    [colors]="chartOptions.colors!"
+    [labels]="chartOptions.labels!"
+    [grid]="chartOptions.grid!"
+    [responsive]="chartOptions.responsive"
+  ></apx-chart>
+</div>

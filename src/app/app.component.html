@@ -1,0 +1,19 @@
+<div class="flex font-kufi">
+ <app-right-sidebar [(open)]="open"></app-right-sidebar>
+  <div
+    class="grow flex flex-col sm:mr-72 transition duration-300"
+    [ngClass]="open ? 'lg:mr-60 ' : 'lg:mr-20'"
+  >
+  <app-nav-bar [userName]="userName" [userPosition] ="userPosition"></app-nav-bar>
+    <div
+      class="grid py-4 px-24 justify-center w-full lg:grid-cols-2 sm:grid-cols-1 sm:gap-10"
+    >
+      <div
+        *ngFor="let chartOptions of chartsOptions"
+        class="h-full shadow-lg bg-light-white lg:px-12 xl:px-16 transition ease-in-out delay-150 hover:-translate-y-0.5 hover:scale-105 hover:ring hover:ring-offset-2 duration-300"
+      >
+        <chart [open]="open" [chartOptions]="chartOptions"></chart>
+      </div>
+    </div>
+  </div>
+</div>

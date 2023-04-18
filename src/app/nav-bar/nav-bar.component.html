@@ -1,0 +1,30 @@
+<div class="bg-light-white ">
+    <nav class="pr-8">
+      <div class="m-8 py-4 grid grid-rows-2 grid-flow-col items-center gap-4">
+        <div class="col-span-4 row-span-1 text-right text-blue-950">
+          {{ userName }}
+        </div>
+        <div class="col-span-4 row-span-1 text-right text-blue-950">
+          {{ userPosition }}
+        </div>
+        <div class="col-span-3 row-span-2 text-right">
+          <mat-icon class="nav-icon">notifications</mat-icon>
+        </div>
+        <div class="col-span-1 row-span-2">
+          <mat-icon class="nav-icon"> message</mat-icon>
+        </div>
+        <div class="col-span-6 row-span-2">
+          <div
+            class="flex items-center rounded-md bg-light-white focus-within:ring"
+          >
+            <mat-icon class="nav-icon text-2xl block mr-2">search</mat-icon>
+            <input
+              type="search"
+              placeholder="...بحث"
+              class="text-lg bg-transparent w-full text-blue-950 focus:outline-none text-right"
+            />
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
