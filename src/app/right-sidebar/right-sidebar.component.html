@@ -1,48 +1,62 @@
-<div #sidenavMain class=" w-72
-  h-full
-  open-nav-state
-  bg-[linear-gradient(152deg,_theme(colors.blue.950),_theme(colors.blue.700),_theme(colors.blue.950))]
-  fixed pt-0 right-0 top-0 p-4 items-center">
-    <button mat-icon-button class="active:bg-violet-700" aria-label="menu" (click)="toggleSidenav()">
-        <mat-icon class="text-white text-3xl">{{
-            open ? 'arrow_right' : 'menu'
-            }}</mat-icon>
-    </button>
-    <div class="flex justify-center">
-        <img #logoImg src="../assets/imgs/Group 2723@3x.png" class=" w-9/12 h-auto pt-0 pb-8" />
-    </div>
-    <hr [ngClass]="open? 'block': 'hidden'"/>
-    <div #navItemTitleA class="relative mb-6 pt-4 mt-4">
-        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <svg aria-hidden="true" class="w-5 text-black mt-4" viewBox="0 0 20 20">
-                <path
-                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
+<div #sidenavMain
+    class="overflow-auto w-72 h-screen open-nav-state bg-[linear-gradient(152deg,_theme(colors.blue.950),_theme(colors.blue.700),_theme(colors.blue.950))] fixed pt-0 right-0 top-0 p-4 items-center">
+    <div class="pb-4 space-y-4">
+        <button mat-icon-button class="active:bg-violet-700" aria-label="menu" (click)="toggleSidenav()">
+
+            <mat-icon class="text-white text-3xl">{{
+                open ? 'arrow_right' : 'menu'
+                }}</mat-icon>
+        </button>
+        <div class="flex justify-center">
+            <img #logoImg src="../assets/imgs/Group 2723@3x.png" class=" w-9/12 h-auto pt-0 " />
         </div>
-        <input type="text" id="input-group-1" class="bg-white
-       border text-right text-black text-lg
-        rounded-full focus:outline-none 
-        focus:ring-2 focus:ring-amber-300 block 
-        w-full pr-10 p-1 placeholder-black" placeholder="بحث.." />
+        <hr />
+    </div>
+    <div [ngClass]="open? 'relative mb-6 pt-4 mt-4' : 'relative pb-12 mt-0 text-white '">
+        <mat-icon (click)="toggleSidenav(true)" class="absolute inset-y-0 right-0 flex items-center pr-8 mt-6"
+            [ngClass]="open? 'mt-6' :'mt-2'">search</mat-icon>
+        <input #navItemTitleA [(ngModel)]="textToFind" type="search" id="input-group-1" name="search"
+            class="bg-white border text-right text-black text-lg rounded-full focus:outline-none focus:ring-2 focus:ring-amber-300 block w-full pr-10 p-1 placeholder-black"
+            placeholder="بحث.." />
 
     </div>
-    <div #navItemTitleB>
-        <button class="w-full text-white  space-x-2 mr-0 pr-0">
-            <i class="mr-0 mdi mdi-magnify mdi-24px"></i> <span>تحقيقات موظفي الهيئة</span>
-            <span class=" mr-0 ms-2 px-2 bg-white text-black rounded-full">3</span>
-        </button>
+    <div>
+        <mat-tree [dataSource]="dataSource | search : textToFind" [treeControl]="treeControl" dir="rtl"
+            class="pr-1 bg-transparent example-tree">
+            <mat-tree-node *matTreeNodeDef="let node" class="text-white pr-4" matTreeNodeToggle>
+                <span [innerHtml] = "node.name | Highlight : textToFind"></span>
+                
+            </mat-tree-node>
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                <div class="mat-tree-node text-white">
 
-        <div class="pr-8 my-2  group-scope-hover:text-white" >
-            <ul class="list relative text-white text-right py-6 space-y-4">
-                <li class=" hover:text-amber-300">تحقيقات موظفي الهيئة</li>
-                <li class=" hover:text-amber-300">تحقيقات موظفي الهيئة</li>
-                <li class=" hover:text-amber-300">تحقيقات موظفي الهيئة</li>
-            </ul>
-        </div>
+                    <a class="text-white pr-0 flex flex-row items-center" routerLinkActive="active-link">
+                        <span *ngIf="isFirstLevel(node)" class=" mr-0 items-center rounded-full "
+                            [ngClass]="open? 'pl-2' : 'ml-3' ">
+                            <mat-icon [matTooltip]="open? '': node.name">library_books</mat-icon>
+                        </span>
+                        <button #navItemTitleB mat-raised-button color="accent" class=" text-white mr-0 pr-0">
 
-        <button class="w-full text-white  space-x-2 mr-0 pr-0">
-            <i class="mr-0 mdi mdi-magnify mdi-24px"></i> <span>تحقيقات المخلصين الجمركيين</span>
-            <span class=" mr-0 ms-2 px-2 bg-white text-black rounded-full">0</span>
-        </button>
+                            <i class="mr-0 mdi mdi-magnify text-start mdi-24px align-middle"></i>
+                            <span [innerHtml]="node?.name | Highlight : textToFind"></span>
+                            <span
+                                class=" mr-0 ms-2 px-2 bg-white text-black rounded-full align-middle">
+                                {{node.children.length}}
+                            </span>
+                        </button>
+                        <button #navItemTitleC mat-icon-button matTreeNodeToggle
+                            [attr.aria-label]="'Toggle ' + node.name">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                    </a>
+                </div>
+                <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" class="pr-4" role="group">
+                    <ng-container matTreeNodeOutlet></ng-container>
+                </div>
+            </mat-nested-tree-node>
+        </mat-tree>
     </div>
 </div>
+
